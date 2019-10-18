@@ -8,17 +8,23 @@ app.use(cors({ origin: true }));
 
 // Routes
 const posts = require('./routes/posts');
+const post_manage = require('./routes/post_manage');
+const profile = require('./routes/profile');
+const subreddit = require('./routes/subreddit');
+const subreddit_manage = require('./routes/subreddit_manage');
+const comments = require('./routes/comments');
+const karma = require('./routes/karma');
 
 /**
  * Exposed APIs
  */
 app.use('/posts', posts);
-
-app.get('/users/:id', (req, res) => res.send(`GET /api/users/${req.params.id} here`));
-app.post('/users', (req, res) => res.send(`POST here`));
-app.put('/users/:id', (req, res) => res.send(`PUT here`));
-app.delete('/users/:id', (req, res) => res.send(`DELETE here`));
-app.get('/users', (req, res) => res.send(`GET users here`));
+app.use('/post_manage', post_manage);
+app.use('/profile', profile);
+app.use('/subreddit', subreddit);
+app.use('/subreddit_manage', subreddit_manage);
+app.use('/comments', comments);
+app.use('/karma', karma);
 
 // End of exposed API.
 

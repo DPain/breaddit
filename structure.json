@@ -1,0 +1,41 @@
+{
+  "subreddit": {
+    "0": "Baguette",
+    "1": "Cake"
+  },
+  "posts" : {
+    "uid1" : {
+      "author" : "2219eccc-67d8-47b9-8744-36de5a728087",
+      "body" : "Shitpost",
+      "title" : "Hello, World!",
+      "subreddit": "Baguette",
+      "comments": ["id1"],
+      "karma": 123123
+    },
+    "uid2" : {
+      "author" : "2219eccc-67d8-47b9-8744-36de5a728087",
+      "body" : "Second Post Body!",
+      "title" : "Second Title!",
+      "subreddit": "Cake",
+      "comments": ["id1"],
+      "karma": 122443
+    }
+  },
+  "comments": {
+    "id1": {
+      "user": "2219eccc-67d8-47b9-8744-36de5a728087",
+      "body": "asdasdasd",
+      "karma": 199121
+    }
+  },
+  "users" : {
+    "2219eccc-67d8-47b9-8744-36de5a728087" : {
+      "name" : "D_Pain",
+      "roles" : {
+        "admin" : true,
+        "writer" : true
+      },
+      "record": ["uid1", "uid2", "id1"]
+    }
+  }
+}
