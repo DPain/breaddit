@@ -49,7 +49,7 @@ router.post('/', (req, res) => {
  * Gets a specific Post.
  */
 router.get('/:_id', (req, res) => {
-  // Get a database reference to our posts
+  // Get a database reference to a post
   var ref = db.ref('/posts/' + req.params._id);
   ref.once('value').then((snapshot) => {
     res.status(200).send(snapshot.val());
@@ -64,7 +64,7 @@ router.get('/:_id', (req, res) => {
  * Deletes a specific Post.
  */
 router.delete('/:_id', (req, res) => {
-  // Get a database reference to our posts
+  // Get a database reference to a post
   var ref = db.ref('/posts/' + req.params._id);
   ref.remove().then(() => {
     res.status(200).send();
@@ -98,11 +98,11 @@ router.put('/:_id', async (req, res) => {
   // Updates entry with updated values.
   let existing_keys = Object.keys(entry);
   Object.keys(req.body).forEach(key => {
-    if(existing_keys.includes(key)) {
+    if (existing_keys.includes(key)) {
       entry[key] = req.body[key];
     }
   });
-  
+
   // Updates the entry
   var ref2 = db.ref('/posts/' + req.params._id);
   ref2.update(entry).then(() => {
