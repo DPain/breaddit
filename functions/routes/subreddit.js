@@ -1,12 +1,22 @@
-const admin = require("firebase-admin");
 const express = require('express');
-
-admin.initializeApp();
+const fb = require('../firebase');
+const db = fb.database()
 
 let router = express.Router();
 
-router.get('/posts', (req, res) => {
+// Gets a list of Subreddits
+router.get('/', (req, res) => {
   // #TODO: implement
+});
+
+// Creates a Subreddit.
+router.post('/', (req, res) => {
+  // #TODO: implement
+});
+
+// Deletes a Subreddit.
+router.delete('/', (req, res) => {
+  // #TODO: Implement
 });
 
 

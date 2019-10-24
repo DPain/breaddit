@@ -1,7 +1,6 @@
-const admin = require("firebase-admin");
 const express = require('express');
-
-admin.initializeApp();
+const fb = require('../firebase');
+const db = fb.database()
 
 let router = express.Router();
 
