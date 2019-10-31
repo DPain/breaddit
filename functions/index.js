@@ -2,6 +2,8 @@ const functions = require('firebase-functions');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser')
+const fb = require('./firebase');
+const auth = require('./auth');
 
 const app = express();
 
@@ -26,7 +28,7 @@ app.use('/posts', posts);
 app.use('/profile', profile);
 app.use('/subreddit', subreddit);
 app.use('/comments', comments);
-app.use('/karma', karma);
+app.use('/karma', auth.isAuthenticated, karma);
 
 // End of exposed API.
 

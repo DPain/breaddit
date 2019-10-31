@@ -1,65 +1,90 @@
 <!DOCTYPE html>
+<!--
+Copyright (c) 2016 Google Inc.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<head>
+  <meta charset=utf-8 />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firebase Authentication Example</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.2.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.2.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.2.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.2.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.2.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
-    <script defer src="/__/firebase/init.js"></script>
+  <!-- Material Design Theming -->
+  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+<div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+  <!-- Header section containing title -->
+  <header class="mdl-layout__header mdl-color-text--white mdl-color--light-blue-700">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
+      <div class="mdl-layout__header-row mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--8-col-desktop">
+        <h3>Firebase Authentication</h3>
+      </div>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+  </header>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+  <main class="mdl-layout__content mdl-color--grey-100">
+    <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-grid">
 
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+      <!-- Container for the Table of content -->
+      <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-cell--12-col-tablet mdl-cell--12-col-desktop">
+        <div class="mdl-card__title mdl-color--light-blue-600 mdl-color-text--white">
+          <h2 class="mdl-card__title-text">Table of Content</h2>
+        </div>
+        <div class="mdl-card__supporting-text mdl-color-text--grey-600">
+          <p>
+            There are multiple methods available for authentication with Firebase. Ensure that the appropriate sign-in method has been
+            enabled in the Firebase Console authentication panel. Note: custom auth does not require enabling.
+          </p>
+
+          <ul>
+            <li><a href="anon.html">Anonymous</a></li>
+            <li><a href="email-password.html">Email and Password authentication</a></li>
+            <li><a href="email-link.html">Email Link authentication</a></li>
+            <li><a href="customauth.html">Custom Authentication</a> and an Example <a href="exampletokengenerator/auth.html">Custom Token Generator</a><br><br></li>
+
+            <li><a href="phone-visible.html">Phone number sign-in with visible ReCaptcha</a></li>
+            <li><a href="phone-invisible.html">Phone number sign-in with invisible ReCaptcha</a></li>
+            <li><a href="phone-simple.html">Phone number sign-in with simplified popup flow (not recommended for production apps)</a><br><br></li>
+
+            <li><a href="google-popup.html">Google sign-in using Popup</a></li>
+            <li><a href="google-redirect.html">Google sign-in using Redirect</a></li>
+            <li><a href="google-credentials.html">Google sign-in using OAuth Credentials (via Google Sign-in Button)</a><br><br></li>
+
+            <li><a href="facebook-popup.html">Facebook login using Popup</a></li>
+            <li><a href="facebook-redirect.html">Facebook login using Redirect</a></li>
+            <li><a href="facebook-credentials.html">Facebook login using OAuth Credentials (via Facebook Login Button)</a><br><br></li>
+
+            <li><a href="twitter-popup.html">Twitter sign-in using Popup</a></li>
+            <li><a href="twitter-redirect.html">Twitter sign-in using Redirect</a><br><br></li>
+
+            <li><a href="microsoft-popup.html">Microsoft sign-in using Popup</a></li>
+            <li><a href="microsoft-redirect.html">Microsoft sign-in using Redirect</a><br><br></li>
+
+            <li><a href="github-popup.html">GitHub sign-in using Popup</a></li>
+            <li><a href="github-redirect.html">GitHub sign-in using Redirect</a></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+</body>
 </html>
