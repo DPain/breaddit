@@ -1,18 +1,22 @@
-const fb = require('./firebase');
+const admin = require("firebase-admin");
 
-module.exports = {
-  isAuthenticated: function (req, res, next) {
-    var user = fb.auth.currentUser;
+async function verifyToken(req, res, next) {
+  const idToken = req.headers.authorization;
 
-    console.log("USER");
-    console.log(JSON.stringify(user, null, 2));
+  try {
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-    if (user !== null) {
-      req.user = user;
-      
+    if (decodedToken) {
+      req.body.uid = decodedToken.uid;
+
       return next();
     } else {
-      res.redirect('/');
+      return res.status(401).send('You are not authorized!');
     }
-  },
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send('Internal server error!');
+  }
 }
+
+module.exports = verifyToken

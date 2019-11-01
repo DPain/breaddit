@@ -25,11 +25,6 @@ router.get('/', (_, res) => {
  * Writes a Post.
  */
 router.post('/', (req, res) => {
-  console.log("I SENT A REQUEST");
-  console.log(JSON.stringify(req.user, null, 2));
-  res.send(req.user)
-
-  /**
   // Creates a Post entry
   let entry = new Post();
   entry.author = req.body.author;
@@ -47,7 +42,7 @@ router.post('/', (req, res) => {
   }).catch(error => {
     console.error(error);
     res.status(500).send();
-  }); */
+  });
 });
 
 /**
