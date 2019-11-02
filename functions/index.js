@@ -7,7 +7,7 @@ const verifyToken = require('./auth');
 
 const app = express();
 
-var whitelist = ['http://localhost:5000', 'https://breaddit-885b4.firebaseapp.com', 'https://breaddit-885b4.web.app']
+var whitelist = ['http://localhost', 'https://breaddit-885b4.firebaseapp.com', 'https://breaddit-885b4.web.app']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
@@ -19,6 +19,9 @@ var corsOptions = {
 }
 
 app.use(cors(corsOptions));
+
+// Debug only.
+//app.use(cors('*'));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({

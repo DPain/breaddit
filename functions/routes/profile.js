@@ -4,20 +4,91 @@ const db = fb.database()
 
 let router = express.Router();
 
-router.get('/comments', (req, res) => {
-  // #TODO: implement
+/**
+ * Gets all information about yourself.
+ */
+router.get('/', (req, res) => {
+  var ref = db.ref(`/users/${req.body.uid}`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
 });
 
-router.get('/karma', (req, res) => {
-  // #TODO: Implement
+/**
+ * Gets all information of a user
+ */
+router.get('/:_id', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
 });
 
-router.get('/posts', (req, res) => {
-  // #TODO: Implement
+/**
+ * Gets all comments made by a user
+ */
+router.get('/:_id/comments', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}/comments`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
 });
 
+/**
+ * Gets all karma made by a user
+ */
+router.get('/:_id/karma', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}/karma`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+/**
+ * Gets all posts made by a user
+ */
+router.get('/:_id/posts', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}/posts`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+/**
+ * Rename a yourself
+ */
 router.post('/rename', (req, res) => {
-  // #TODO: Implement
+  let uid = req.body.uid;
+  let name = req.body.name;
+
+  var ref = db.ref(`/users/${uid}/name`);
+  ref.set(name).then(() => {
+    res.status(200).send();
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
 });
 
 

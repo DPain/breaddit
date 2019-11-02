@@ -42,9 +42,6 @@ limitations under the License.
       };
       let token = await firebase.auth().currentUser.getIdToken();
 
-      console.log('token');
-      console.log(token);
-
       let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/karma/comment/-LrzMy3yhYJfR6mefUaN', {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           headers: {
@@ -52,6 +49,23 @@ limitations under the License.
             'Authorization': token
           },
           body: JSON.stringify(test)
+        })
+        .then((resp) => resp.text()); // parses JSON response into native JavaScript objects 
+
+      console.log(val);
+    }
+
+    async function request_profile(bool) {
+      console.log('FUNCTION EXECUTED');
+
+      let token = await firebase.auth().currentUser.getIdToken();
+
+      let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile', {
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+          }
         })
         .then((resp) => resp.text()); // parses JSON response into native JavaScript objects 
 
@@ -192,6 +206,11 @@ limitations under the License.
           <br>
           <br>
           <button class="mdl-button mdl-js-button mdl-button--raised" id="testfalse">Downvote</button>
+          <br>
+          <br>
+          <button class="mdl-button mdl-js-button mdl-button--raised" id="testprofile">Profile</button>
+          <br>
+          <br>
 
           <p>Sign in with your Google account below.</p>
 
@@ -217,6 +236,9 @@ document.querySelector('#test').addEventListener("click", () => {
 }, false);
 document.querySelector('#testfalse').addEventListener("click", () => {
   request(false)
+}, false);
+document.querySelector('#testprofile').addEventListener("click", () => {
+  request_profile(false)
 }, false);
 </script>
 </body>
