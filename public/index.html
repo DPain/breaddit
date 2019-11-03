@@ -30,21 +30,21 @@ limitations under the License.
   <script src="server-requests.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="nav">
-    <a disabled id="home" class="navbar-brand" href="#"><i class="fas fa-bread-slice"></i> breaddit</a>
+  <nav class="hidden navbar navbar-expand-md navbar-dark bg-dark" id="nav">
+    <a id="home" class="navbar-brand" href="#"><i class="fas fa-bread-slice"></i> breaddit</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a disabled class="nav-link" href="#" id="userprofile">User</a>
+          <a class="nav-link" href="#" id="userprofile">User</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0" id="myform">
         <span class="fa fa-search form-control-feedback" id="sIcon"></span>
         <input class="form-control mr-sm-2" type="search" placeholder="Search" id="search">
-        <button disabled class="btn my-2 my-sm-0" type="submit" id="submit">Search</button>
+        <button class="btn my-2 my-sm-0" type="submit" id="submit">Search</button>
       </form>
     </div>
   </nav>
@@ -72,7 +72,7 @@ limitations under the License.
     <section class="hidden" id="homepage">
       <div class="jumbotron bg-dark">
         <input name="breaddit" class="text-white bg-dark" type="text" id="breaddit" placeholder="New breaddit name" />
-        <button type="button" class="text-white bg-dark" id="createbreaddit">Create Breaddit</button>
+        <button type="button" class="btn text-white" id="createbreaddit">Create Breaddit</button>
       </div>
       <div id="posts">
         <div class="card text-white bg-dark w-100">
@@ -83,7 +83,7 @@ limitations under the License.
               <i class="fas fa-caret-down"></i>
             </div>
             <div class="p-2 flex-grow-1 bd-highlight float-right">
-              <h6 class="card-subtitle mb-2 text-muted text-left">b/breaddit • by sampleuser</h6>
+              <h6 class="card-subtitle mb-2 text-muted text-left"><strong id="postbreaddit">b/breaddit</strong> • Posted by u/sampleuser</h6>
               <h5 class="card-title text-left">sample post</h5>
               <p class="card-text text-left">kdsjfksdfjndksnf</p>
             </div>
@@ -102,7 +102,7 @@ limitations under the License.
       <p>
         <input name="postTitle" type="text" id="postTitle" placeholder="Title" />
         <textarea name="postBody" type="textarea" id="#postBody" placeholder="Body"></textarea>
-        <button type="button" id="submitNewPost">Submit</button>
+        <button type="button" class="btn" id="submitNewPost">Submit</button>
       </p>
       </section>
       <section class="hidden" id="breadditPage">
@@ -111,7 +111,7 @@ limitations under the License.
         <ul id="breadditposts"></ul>
       </section>
       <br>
-      <button disabled type="button" class="text-white bg-dark" id="googlesignin">Join Breaddit</button>
+      <button disabled type="button" class="btn text-white bg-dark" id="googlesignin">Join Breaddit</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -129,9 +129,7 @@ limitations under the License.
         var name = $("#myname").val();
         // function to add username to the user
         $("#userprofile").append(` ${name}`);
-        $("#submit").prop("disabled", false);
-        $("#home").prop("disabled", false); //enable navbar links
-        $("#userprofile").prop("disabled", false);
+        $("#nav").removeClass("hidden");
         $("#googlesignin").addClass("hidden");
         $("#notloggedin").addClass("hidden");
         $("#homepage").removeClass("hidden"); //switch to actual homepage
