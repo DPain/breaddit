@@ -1,0 +1,41 @@
+body {
+  background: black;
+  color: white;
+  text-align: center;
+}
+
+#nav {
+    font-family: 'Rubik', sans-serif;
+}
+  
+#search {
+    background: black;
+    color: white;
+    padding-left: 2.375rem;
+}
+
+#submit {
+    color: white;
+    background: black;
+}
+
+#sIcon {
+    position: absolute;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #aaa;
+}
+
+#pfp {
+  height: 20px;
+  width: 20px;
+}
+
+.hidden {
+  display: none;
+}
