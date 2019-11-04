@@ -1,4 +1,4 @@
-async function request(bool) {
+async function request_karma(bool) {
     console.log('FUNCTION EXECUTED');
     var test = {
         'vote': bool
@@ -26,10 +26,23 @@ async function request_profile(bool) {
             'Authorization': token
         }
     })
-    .then((resp) => resp.text()); // parses JSON response into native JavaScript objects 
+    .then((resp) => resp.json()); // parses JSON response into native JavaScript objects 
     console.log(val);
+    return val;
 }
 
+async function change_name(name){
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/rename',{
+        method:'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(name)
+    });
+    return await response.json();
+}
     /**
      * Function called when clicking the Login/Logout button.
     */
@@ -116,7 +129,7 @@ function initApp() {
           //document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('googlesignin').textContent = 'Sign out';
           $('#userprofile').html(`<img src="${user.photoURL}" id="pfp">`);
-          $('')
+          $('#profilepic').html(`<img src="${user.photoURL}" id="pic">`)
           //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
           // [END_EXCLUDE]
           $('#createuser').removeClass('hidden');

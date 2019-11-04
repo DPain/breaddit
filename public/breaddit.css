@@ -2,6 +2,7 @@ body {
   background-image: url("breadditbackground.jpg");
   color: #d7dadc;
   text-align: center;
+  font-family: 'Roboto', sans-serif;
 }
 
 #nav {
@@ -32,6 +33,16 @@ body {
   width: 30px;
   border-radius: 5px;
 }
+#pic {
+  border-radius: 20px;
+  height: 150px;
+  width: 150px;
+}
+#userprofile:hover {
+  border-color: gray;
+  border-width: thin;
+}
+
 
 #postbreaddit {
   color: #d7dadc;
@@ -41,16 +52,23 @@ body {
   background: #1a1a1b;
   border-color: gray;
 }
+
 .form-control:focus {
   background: #1a1a1b;
   border-color: white;
 }
+
 .btn:hover {
   background: red;
 }
+
 .vote-arrow {
   color: #818384;
 }
 .hidden {
   display: none;
+}
+
+.blurred {
+  filter: blur(25px);
 }

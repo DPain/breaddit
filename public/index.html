@@ -18,7 +18,8 @@ limitations under the License.
 <head>
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Breaddit-Homepage</title>
+  <link rel="shortcut icon" href="bread.ico">
+  <title>Breaddit</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Roboto|Rubik&display=swap" rel="stylesheet">
   <link rel = "stylesheet" type = "text/css" href = "breaddit.css">
@@ -115,8 +116,8 @@ limitations under the License.
     </section>
     <section class="hidden" id="profile">
       <div class="jumbotron bg-dark">
-        <h1 id="userscreenname"></h1>
-        user details here
+        <div id="profilepic"></div><br>
+        <h1 class="blurred" id="userscreenname">u/kdjfdskf <br> Karma: 27</h1>
       </div>
     </section>
     <section class="hidden" id="newPost">
@@ -135,7 +136,7 @@ limitations under the License.
         <ul id="breadditposts"></ul>
       </section>
       <br>
-      <button disabled type="button" class="btn text-white" id="googlesignin">Join Breaddit</button>
+      <button disabled type="button" class="btn text-white bg-dark" id="googlesignin">Join Breaddit</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -146,10 +147,8 @@ limitations under the License.
       document.querySelector('#testfalse').addEventListener("click", () => {
         request(false)
       }, false);
-      document.querySelector('#testprofile').addEventListener("click", () => {
-        request_profile(false)
-      }, false);*/
-      $("#join").click(function(){
+      */
+      $("#join").click(async function(){
         var name = $("#myname").val();
         // function to add username to the user
         $("#userprofile").append(` ${name}`);
@@ -157,6 +156,8 @@ limitations under the License.
         $("#googlesignin").addClass("hidden");
         $("#notloggedin").addClass("hidden");
         $("#homepage").removeClass("hidden"); //switch to actual homepage
+        var nametochange = {"name": name};
+        await name_change(nametochange);
       });
       $("#home").click(function(){
         $("#breadditPage").addClass("hidden");
@@ -167,13 +168,20 @@ limitations under the License.
         //shows homepage content that only allows you to veiw new posts and create a new breaddit
         //function to GET all posts and display them each in #posts
       });
-      $("#userprofile").click(function(){
+      $("#userprofile").click(async function(){
         $("#breadditPage").addClass("hidden");
         $("#newPost").addClass("hidden");
         $("#homepage").addClass("hidden");
         $("#profile").removeClass("hidden"); //show just profile and allow user to sign out
         $("#googlesignin").removeClass("hidden");
-        //function to GET all User details
+        
+        var myProfile = await request_profile(false);
+        console.log(myProfile);
+        var name = myProfile["name"];
+        var karma = myProfile["karma"];
+        console.log(name);
+        $("#userscreenname").html(`u/${name} <br> <span class="text-muted font-weight-light">Karma: ${karma}</span>`);
+        $("#userscreenname").removeClass("blurred");
       });
     </script>
   </body>
