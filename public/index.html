@@ -41,11 +41,17 @@ limitations under the License.
           <a class="nav-link" href="#" id="userprofile">User</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0" id="myform">
-        <span class="fa fa-search form-control-feedback" id="sIcon"></span>
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" id="search">
-        <button class="btn my-2 my-sm-0" type="submit" id="submit">Search</button>
-      </form>
+      <div class="d-flex justify-content-center bd-highlight" id="myform">
+        <div class="p-2 w-100 bd-highlight input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-search"><i class="fa fa-search" id="sIcon"></i></span>
+          </div>
+          <input name="search" type="text" class="form-control text-white float-none" id="search" placeholder="Search Breaddit" aria-label="Search Breaddit" aria-describedby="basic-search"/>
+        </div>
+        <div class="p-2 bd-highlight">
+          <button type="button" class="btn text-white" id="submit">Search</button>
+        </div>
+      </div>
     </div>
   </nav>
   <br>
@@ -58,8 +64,17 @@ limitations under the License.
         <h1>Welcome to Breaddit!</h1>
         <p>Sign in with Google and choose your username to continue</p>
       </div>
-      <input name="myname" type="text" class="text-white bg-dark hidden" id="myname" placeholder="Your screenname" /> &nbsp;
-      <button type="button" class="text-white bg-dark hidden" id="join">Join Breaddit</button>
+      <div class="d-flex hidden justify-content-center bd-highlight" id="createuser">
+        <div class="p-2 w-50 bd-highlight input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">u/</span>
+          </div>
+          <input name="myname" type="text" class="form-control text-white float-none" id="myname" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
+        </div>
+        <div class="p-2 bd-highlight">
+          <button type="button" class="btn text-white bg-dark" id="join">Join</button>
+        </div>
+      </div>
       <!-- Container where we'll display the user details -->
       <!--div class="quickstart-user-details-container">
         <Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
@@ -70,17 +85,24 @@ limitations under the License.
       </div-->
     </section>
     <section class="hidden" id="homepage">
-      <div class="jumbotron bg-dark">
-        <input name="breaddit" class="text-white bg-dark" type="text" id="breaddit" placeholder="New breaddit name" />
-        <button type="button" class="btn text-white" id="createbreaddit">Create Breaddit</button>
+      <div class="d-flex justify-content-center bd-highlight jumbotron bg-dark">
+        <div class="p-2 w-75 bd-highlight input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-createbreaddit">b/</span>
+          </div>
+          <input name="breaddit" type="text" class="form-control text-white float-none" id="breaddit" placeholder="New Breaddit name" aria-label="New Breaddit name" aria-describedby="basic-createbreaddit"/>
+        </div>
+        <div class="p-2 bd-highlight">
+          <button type="button" class="btn text-white" id="createbreaddit">Create</button>
+        </div>
       </div>
       <div id="posts">
         <div class="card text-white bg-dark w-100">
           <div class="d-flex bd-highlight card-body">
             <div class="p-2 bd-highlight float-left" id="votes">
-              <i class="fas fa-caret-up"></i><br>
-              1<br>
-              <i class="fas fa-caret-down"></i>
+              <i class="fas fa-caret-up vote-arrow" id="up"></i>
+              <div id="votes">1</div>
+              <i class="fas fa-caret-down vote-arrow" id=down"></i>
             </div>
             <div class="p-2 flex-grow-1 bd-highlight float-right">
               <h6 class="card-subtitle mb-2 text-muted text-left"><strong id="postbreaddit">b/breaddit</strong> • Posted by u/sampleuser</h6>
@@ -100,18 +122,20 @@ limitations under the License.
     <section class="hidden" id="newPost">
       <h1 id="newpostheader"></h1>
       <p>
-        <input name="postTitle" type="text" id="postTitle" placeholder="Title" />
-        <textarea name="postBody" type="textarea" id="#postBody" placeholder="Body"></textarea>
+        <input name="postTitle" class="form-control vw-75 float-none" type="text" id="postTitle" placeholder="Title" />
+        <br>
+        <textarea name="postBody" class="form-control vw-100 float-none" type="textarea" id="#postBody" placeholder="Body"></textarea>
+        <br>
         <button type="button" class="btn" id="submitNewPost">Submit</button>
       </p>
       </section>
       <section class="hidden" id="breadditPage">
         <h1 id="breadditname"></h1>
-        <button type="button" id="createNewPost">Create New Post</button>
+        <button type="button" class="btn text-white" id="createNewPost">Create New Post</button>
         <ul id="breadditposts"></ul>
       </section>
       <br>
-      <button disabled type="button" class="btn text-white bg-dark" id="googlesignin">Join Breaddit</button>
+      <button disabled type="button" class="btn text-white" id="googlesignin">Join Breaddit</button>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

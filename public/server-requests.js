@@ -119,8 +119,7 @@ function initApp() {
           $('')
           //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
           // [END_EXCLUDE]
-          $('#myname').removeClass('hidden');
-          $('#join').removeClass('hidden');
+          $('#createuser').removeClass('hidden');
         } else {
           // User is signed out.
           // [START_EXCLUDE]
@@ -129,8 +128,7 @@ function initApp() {
           //document.getElementById('quickstart-account-details').textContent = 'null';
           //document.getElementById('quickstart-oauthtoken').textContent = 'null';
           // [END_EXCLUDE]
-          $('#myname').addClass('hidden');
-          $('#join').addClass('hidden');
+          $('#createuser').addClass('hidden');
         }
         // [START_EXCLUDE]
         document.getElementById('googlesignin').disabled = false;

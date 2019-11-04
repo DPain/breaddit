@@ -1,5 +1,5 @@
 body {
-  background: #030303;
+  background-image: url("breadditbackground.jpg");
   color: #d7dadc;
   text-align: center;
 }
@@ -12,7 +12,6 @@ body {
 #search {
     background: #272729;
     color: #d2d5d7;
-    padding-left: 2.375rem;
 }
 
 #submit {
@@ -20,19 +19,11 @@ body {
     background: black;
 }
 
-#createbreaddit {
+.btn {
   background: #1a1a1b;
 }
 
 #sIcon {
-    position: absolute;
-    z-index: 2;
-    display: block;
-    width: 2.375rem;
-    height: 2.375rem;
-    line-height: 2.375rem;
-    text-align: center;
-    pointer-events: none;
     color: #818384;
 }
 
@@ -45,6 +36,20 @@ body {
   color: #d7dadc;
 }
 
+.form-control {
+  background: #1a1a1b;
+  border-color: gray;
+}
+.form-control:focus {
+  background: #1a1a1b;
+  border-color: white;
+}
+.btn:hover {
+  background: red;
+}
+.vote-arrow {
+  color: #818384;
+}
 .hidden {
   display: none;
 }
