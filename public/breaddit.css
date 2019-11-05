@@ -9,7 +9,35 @@ body {
     font-family: 'Rubik', sans-serif;
     background: #1A1A1B;
 }
-  
+
+.d-inline-flex {
+  background: #1a1a1b;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.d-flex {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.card {
+  background: #1a1a1b;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.card:hover{
+  border: 1px solid white;
+}
+
+.navbar-dark {
+  background: #1a1a1b;
+  color: #d7dadc;
+}
+
 #search {
     background: #272729;
     color: #d2d5d7;
@@ -22,6 +50,7 @@ body {
 
 .btn {
   background: #1a1a1b;
+  border: 1px solid gray;
 }
 
 #sIcon {
@@ -33,14 +62,16 @@ body {
   width: 30px;
   border-radius: 5px;
 }
+
 #pic {
   border-radius: 20px;
   height: 150px;
   width: 150px;
 }
+
 #userprofile:hover {
-  border-color: gray;
-  border-width: thin;
+  border: 1px solid gray;
+  border-radius: 5px;
 }
 
 
@@ -48,23 +79,35 @@ body {
   color: #d7dadc;
 }
 
+.input-group {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#create {
+  margin: auto;
+}
+
 .form-control {
-  background: #1a1a1b;
-  border-color: gray;
+  background: #272729;
+}
+
+.form-control:hover {
+  border: 1px solid white;
 }
 
 .form-control:focus {
-  background: #1a1a1b;
-  border-color: white;
+  background: black;
 }
 
 .btn:hover {
-  background: red;
+  background: gray
 }
 
 .vote-arrow {
   color: #818384;
 }
+
 .hidden {
   display: none;
 }

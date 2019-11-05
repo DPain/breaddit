@@ -142,6 +142,9 @@ function initApp() {
           //document.getElementById('quickstart-oauthtoken').textContent = 'null';
           // [END_EXCLUDE]
           $('#createuser').addClass('hidden');
+          $('#profile').addClass('hidden');
+          $('#createuser').addClass('hidden');
+          $('#notloggedin').removeClass('hidden');
         }
         // [START_EXCLUDE]
         document.getElementById('googlesignin').disabled = false;

@@ -14,7 +14,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 -->
-<html>
+<html lang="en">
 <head>
   <meta charset=utf-8 />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,7 +31,7 @@ limitations under the License.
   <script src="server-requests.js"></script>
 </head>
 <body>
-  <nav class="hidden navbar navbar-expand-md navbar-dark bg-dark" id="nav">
+  <nav class="hidden navbar navbar-expand-md navbar-dark" id="nav">
     <a id="home" class="navbar-brand" href="#"><i class="fas fa-bread-slice"></i> breaddit</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -55,8 +55,8 @@ limitations under the License.
       </div>
     </div>
   </nav>
-  <br>
   <div class="container">
+    <br>
     <section id="notloggedin">
       <!--button id="test">Upvote</button>
       <button id="testfalse">Downvote</button>
@@ -85,20 +85,19 @@ limitations under the License.
         <pre><code id="quickstart-oauthtoken">null</code></pre>
       </div-->
     </section>
-    <section class="hidden" id="homepage">
-      <div class="d-flex justify-content-center bd-highlight jumbotron bg-dark">
-        <div class="p-2 w-75 bd-highlight input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-createbreaddit">b/</span>
-          </div>
-          <input name="breaddit" type="text" class="form-control text-white float-none" id="breaddit" placeholder="New Breaddit name" aria-label="New Breaddit name" aria-describedby="basic-createbreaddit"/>
+    <section class="hidden justify-content-center" id="homepage">
+      <div class="p-2 w-75 bd-highlight input-group mb-3" id="create">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-createbreaddit">b/</span>
         </div>
-        <div class="p-2 bd-highlight">
+        <input name="breaddit" type="text" class="form-control text-white float-none" id="breaddit" placeholder="New Breaddit name" aria-label="New Breaddit name" aria-describedby="basic-createbreaddit"/>
+        <div class="input-group-append">
           <button type="button" class="btn text-white" id="createbreaddit">Create</button>
         </div>
       </div>
+      <br>
       <div id="posts">
-        <div class="card text-white bg-dark w-100">
+        <div class="card w-100">
           <div class="d-flex bd-highlight card-body">
             <div class="p-2 bd-highlight float-left" id="votes">
               <i class="fas fa-caret-up vote-arrow" id="up"></i>
@@ -115,9 +114,12 @@ limitations under the License.
       </div>
     </section>
     <section class="hidden" id="profile">
-      <div class="jumbotron bg-dark">
-        <div id="profilepic"></div><br>
-        <h1 class="blurred" id="userscreenname">u/kdjfdskf <br> Karma: 27</h1>
+      <div class="d-inline-flex bd-highlight">
+        <div class="p-2 bd-highlight" id="profilepic"></div>
+        <div class="blurred p-2 flex-grow-1 bd-highlight" id="userinfo">
+          <h1 class="text-center" id="username">u/name</h1>
+          <p class="text-center"><i class="fas fa-spa"></i> Crumbs<br><span class="text-muted" id="usercrumbs">27</span></p>
+        </div>
       </div>
     </section>
     <section class="hidden" id="newPost">
@@ -180,8 +182,9 @@ limitations under the License.
         var name = myProfile["name"];
         var karma = myProfile["karma"];
         console.log(name);
-        $("#userscreenname").html(`u/${name} <br> <span class="text-muted font-weight-light">Karma: ${karma}</span>`);
-        $("#userscreenname").removeClass("blurred");
+        $("#username").html(`u/${name}`);
+        $("#usercrumbs").html(`${karma}`);
+        $("#userinfo").removeClass("blurred");
       });
     </script>
   </body>
