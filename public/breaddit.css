@@ -43,6 +43,14 @@ body {
     color: #d2d5d7;
 }
 
+.vote-arrow:hover {
+  color: blue;
+}
+
+.voted {
+  color: blue;
+}
+
 #submit {
     color: white;
     background: black;

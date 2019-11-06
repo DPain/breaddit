@@ -27,7 +27,7 @@ router.get('/', (_, res) => {
 router.post('/', (req, res) => {
   // Creates a Post entry
   let entry = new Post();
-  entry.author = req.body.author;
+  entry.author = req.body.uid;
   entry.body = req.body.body;
   entry.comments = [];
   entry.karma = 0;

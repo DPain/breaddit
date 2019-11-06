@@ -1,5 +1,6 @@
+//GET only
 async function request_karma(bool) {
-    console.log('FUNCTION EXECUTED');
+    console.log('karma requested');
     var test = {
         'vote': bool
     };
@@ -17,7 +18,7 @@ async function request_karma(bool) {
 }
 
 async function request_profile(bool) {
-    console.log('FUNCTION EXECUTED');
+    console.log('profile requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile', {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
@@ -31,7 +32,56 @@ async function request_profile(bool) {
     return val;
 }
 
+async function request_user_posts(bool){
+    console.log('user posts requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let uid = await firebase.auth().currentUser.uid;
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${uid}/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp);
+    console.log(val);
+    return val;
+}
+
+//create
+async function create_breaddit(name){
+    let params = {"name": name};
+    console.log('create breaddit requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/subreddit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(params)
+    });
+    return await response;
+}
+
+async function create_post(title, body, subreddit){
+    let params = {"title": title, "body": body, "subreddit": subreddit};
+    console.log('create post requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(params)
+    });
+    return await response;
+}
+
+//change data
 async function change_name(name){
+    let params = {"name": name};
     let token = await firebase.auth().currentUser.getIdToken();
     const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/rename',{
         method:'POST',
@@ -39,13 +89,15 @@ async function change_name(name){
             'Content-Type': 'application/json',
             'Authorization': token
         },
-        body: JSON.stringify(name)
+        body: JSON.stringify(params)
     });
-    return await response.json();
+    return await response;
 }
-    /**
-     * Function called when clicking the Login/Logout button.
-    */
+
+
+/*
+* Auth function called when clicking the Login/Logout button.
+*/
     // [START buttoncallback]
 function toggleSignIn() {
     if (!firebase.auth().currentUser) {
@@ -128,7 +180,7 @@ function initApp() {
           // [START_EXCLUDE]
           //document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
           document.getElementById('googlesignin').textContent = 'Sign out';
-          $('#userprofile').html(`<img src="${user.photoURL}" id="pfp">`);
+          $('#userprofile').html(`<img src="${user.photoURL}" id="pfp"> <span id="name"></span>`);
           $('#profilepic').html(`<img src="${user.photoURL}" id="pic">`)
           //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
           // [END_EXCLUDE]
@@ -140,11 +192,12 @@ function initApp() {
           document.getElementById('googlesignin').textContent = 'Sign in with Google';
           //document.getElementById('quickstart-account-details').textContent = 'null';
           //document.getElementById('quickstart-oauthtoken').textContent = 'null';
+          $('#createuser').addClass("hidden");
+          $("#profile").addClass("hidden");
+          $("#newPost").addClass("hidden");
+          $("#homepage").addClass("hidden");
+          $("#breadditPage").addClass("hidden");
           // [END_EXCLUDE]
-          $('#createuser').addClass('hidden');
-          $('#profile').addClass('hidden');
-          $('#createuser').addClass('hidden');
-          $('#notloggedin').removeClass('hidden');
         }
         // [START_EXCLUDE]
         document.getElementById('googlesignin').disabled = false;
