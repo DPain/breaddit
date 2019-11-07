@@ -1,0 +1,125 @@
+body {
+  background-image: url("breadditbackground.jpg");
+  color: #d7dadc;
+  text-align: center;
+  font-family: 'Roboto', sans-serif;
+}
+
+#nav {
+    font-family: 'Rubik', sans-serif;
+    background: #1A1A1B;
+}
+
+.d-inline-flex {
+  background: #1a1a1b;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.d-flex {
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.card {
+  background: #1a1a1b;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid gray;
+}
+
+.card:hover{
+  border: 1px solid white;
+}
+
+.navbar-dark {
+  background: #1a1a1b;
+  color: #d7dadc;
+}
+
+#search {
+    background: #272729;
+    color: #d2d5d7;
+}
+
+.vote-arrow:hover {
+  color: blue;
+}
+
+.voted {
+  color: blue;
+}
+
+#submit {
+    color: white;
+    background: black;
+}
+
+.btn {
+  background: #1a1a1b;
+  border: 1px solid gray;
+}
+
+#sIcon {
+    color: #818384;
+}
+
+#pfp {
+  height: 30px;
+  width: 30px;
+  border-radius: 5px;
+}
+
+#pic {
+  border-radius: 20px;
+  height: 150px;
+  width: 150px;
+}
+
+#userprofile:hover {
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+
+#postbreaddit {
+  color: #d7dadc;
+}
+
+.input-group {
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+#create {
+  margin: auto;
+}
+
+.form-control {
+  background: #272729;
+}
+
+.form-control:hover {
+  border: 1px solid white;
+}
+
+.form-control:focus {
+  background: black;
+}
+
+.btn:hover {
+  background: gray
+}
+
+.vote-arrow {
+  color: #818384;
+}
+
+.hidden {
+  display: none;
+}
+
+.blurred {
+  filter: blur(25px);
+}

@@ -1,0 +1,7 @@
+{
+  "karma" : 0,
+  "name" : "Guest",
+  "roles" : {
+    "admin" : false
+  }
+}
