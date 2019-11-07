@@ -73,5 +73,8 @@ typings/
 # Eclipse Nodejs Codemix & VS Code
 .vscode/
 
+# Cloud9 settings
+.c9/
+
 # Firebase Service account key
 serviceAccountKey.json

@@ -9,7 +9,7 @@ const Comment = require("../models/comment");
 /**
  * Writes a Comment.
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // Creates a Comment entry
   let entry = new Comment();
   entry.author = req.body.author;
@@ -18,9 +18,17 @@ router.post('/', (req, res) => {
 
   // Get a database reference to our comments
   var ref = db.ref('/comments');
-  ref.push(entry).then(() => {
+  let key = await ref.push(entry).then((snapshot) => {
+    return snapshot.key;
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+
+  let userComment = db.ref(`/users/${entry.author}/comments/${key}`);
+  userComment.set(true).then(() => {
     res.status(200).send(entry);
-    return null;
+    return
   }).catch(error => {
     console.error(error);
     res.status(500).send();

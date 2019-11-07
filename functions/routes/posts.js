@@ -1,6 +1,6 @@
 const express = require('express');
 const fb = require('../firebase');
-const db = fb.database()
+const db = fb.database();
 
 let router = express.Router();
 
@@ -24,7 +24,7 @@ router.get('/', (_, res) => {
 /**
  * Writes a Post.
  */
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // Creates a Post entry
   let entry = new Post();
   entry.author = req.body.uid;
@@ -36,23 +36,21 @@ router.post('/', (req, res) => {
 
   // Get a database reference to our posts
   var ref = db.ref('/posts');
-  var newPostRef = ref.push(entry);
-  var pid = newPostRef.key;
-  ref = db.ref(`/users/${entry.author}/posts`);
-  ref.push(pid).then(()=> {
-    res.status(200).send(entry);
-    return null;
+  let key = await ref.push(entry).then((snapshot) => {
+    return snapshot.key;
   }).catch(error => {
     console.error(error);
     res.status(500).send();
   });
- /*var newPostRef = ref.push(entry).then(() => {
+
+  let userPost = db.ref(`/users/${entry.author}/posts/${key}`);
+  userPost.set(true).then(() => {
     res.status(200).send(entry);
-    return null;
+    return
   }).catch(error => {
     console.error(error);
     res.status(500).send();
-  });*/
+  });
 });
 
 /**
@@ -61,7 +59,7 @@ router.post('/', (req, res) => {
 router.get('/:_id', (req, res) => {
   // Get a database reference to a post
   var ref = db.ref('/posts/' + req.params._id);
-  
+
   ref.once('value').then((snapshot) => {
     res.status(200).send(snapshot.val());
     return null;
