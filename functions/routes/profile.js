@@ -75,7 +75,7 @@ router.get('/:_id/posts', (req, res) => {
 });
 
 /**
- * Rename a yourself
+ * Rename yourself
  */
 router.post('/rename', (req, res) => {
   let uid = req.body.uid;
@@ -90,7 +90,5 @@ router.post('/rename', (req, res) => {
     res.status(500).send();
   });
 });
-
-
 
 module.exports = router;

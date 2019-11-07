@@ -43,7 +43,22 @@ async function request_user_posts(bool){
             'Authorization': token
         }
     })
-    .then((resp) => resp);
+    .then((resp) => resp.text());
+    console.log(val);
+    return val;
+}
+
+async function request_all_posts(bool){
+    console.log('all posts requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts', {
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.text());
     console.log(val);
     return val;
 }

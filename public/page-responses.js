@@ -19,12 +19,14 @@ $("#join").click(async function(){ //allow user to change name, then homepage lo
     //load homepage
 });
 
-$("#home").click(function(){ //navigate to homepage
+$("#home").click(async function(){ //navigate to homepage
     $("#breadditPage").addClass("hidden");
     $("#profile").addClass("hidden");
     $("#newPost").addClass("hidden");
     $("#googlesignin").addClass("hidden");
     $("#homepage").removeClass("hidden");
+    var allposts = await request_all_posts(false);
+    console.log(allposts);
     //load homepage
     //shows homepage content that only allows you to veiw new posts and create a new breaddit
     //function to GET all posts and display them each in #posts
