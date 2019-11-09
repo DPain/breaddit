@@ -17,6 +17,21 @@ async function request_karma(bool) {
     console.log(val);
 }
 
+async function request_username(bool, userID) {
+    console.log('username requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${userID}/name`, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.text()); // parses JSON response into native JavaScript objects 
+    console.log(val);
+    return val;
+}
+
 async function request_profile(bool) {
     console.log('profile requested');
     let token = await firebase.auth().currentUser.getIdToken();
@@ -32,18 +47,33 @@ async function request_profile(bool) {
     return val;
 }
 
+async function request_post(bool, pid) {
+    console.log('specific post requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts/${pid}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.json());
+    console.log(val);
+    return val;
+}
+
 async function request_user_posts(bool) {
     console.log('user posts requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let uid = await firebase.auth().currentUser.uid;
     let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${uid}/posts`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }
-        })
-        .then((resp) => resp.text());
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.text());
     console.log(val);
     return val;
 }
@@ -52,13 +82,13 @@ async function request_all_posts(bool) {
     console.log('all posts requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }
-        })
-        .then((resp) => resp.text());
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.json());
     console.log(val);
     return val;
 }

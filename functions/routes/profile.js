@@ -75,6 +75,20 @@ router.get('/:_id/posts', (req, res) => {
 });
 
 /**
+ * get name
+ */
+router.get('/:_id/name', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}/name`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+/**
  * Rename yourself
  */
 router.post('/rename', (req, res) => {
