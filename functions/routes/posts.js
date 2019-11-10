@@ -29,8 +29,6 @@ router.post('/', async (req, res) => {
   let entry = new Post();
   entry.author = req.body.uid;
   entry.body = req.body.body;
-  entry.comments = [];
-  entry.karma = 0;
   entry.subreddit = req.body.subreddit;
   entry.title = req.body.title;
 
@@ -42,7 +40,14 @@ router.post('/', async (req, res) => {
     console.error(error);
     res.status(500).send();
   });
-
+  
+  
+  let breadditPost = db.ref(`/subreddit/${entry.subreddit}/posts/${key}`);
+  breadditPost.set(true);
+  
+  let breadditHasPosts = db.ref(`/subreddit/${entry.subreddit}/hasPosts`);
+  breadditHasPosts.set(true);
+  
   let userPost = db.ref(`/users/${entry.author}/posts/${key}`);
   userPost.set(true).then(() => {
     res.status(200).send(entry);
@@ -78,6 +83,20 @@ router.delete('/:_id', (req, res) => {
   ref.remove().then(() => {
     res.status(200).send();
     return null;
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+router.post('/numChange', (req, res) => {
+  let pid = req.body.pid;
+  let num = req.body.num;
+
+  var ref = db.ref(`/posts/${pid}/numOfComments`);
+  ref.set(num).then(() => {
+    res.status(200).send();
+    return
   }).catch(error => {
     console.error(error);
     res.status(500).send();

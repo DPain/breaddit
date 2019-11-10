@@ -12,9 +12,8 @@ const Comment = require("../models/comment");
 router.post('/', async (req, res) => {
   // Creates a Comment entry
   let entry = new Comment();
-  entry.author = req.body.author;
+  entry.author = req.body.uid;
   entry.body = req.body.body;
-  entry.karma = 0;
 
   // Get a database reference to our comments
   var ref = db.ref('/comments');
@@ -24,7 +23,10 @@ router.post('/', async (req, res) => {
     console.error(error);
     res.status(500).send();
   });
-
+  
+  var post = db.ref(`/posts/${req.body.pid}/comments/${key}`);
+  post.set(true);
+  
   let userComment = db.ref(`/users/${entry.author}/comments/${key}`);
   userComment.set(true).then(() => {
     res.status(200).send(entry);
@@ -36,10 +38,51 @@ router.post('/', async (req, res) => {
 });
 
 /**
- * Gets multiple Comments.
+ * Writes a reply
  */
-router.post('/', (req, res) => {
-  // #TODO: Implement
+router.post('/reply', async (req, res) => {
+  // Creates a Comment entry
+  let entry = new Comment();
+  entry.author = req.body.uid;
+  entry.body = req.body.body;
+
+  // Get a database reference to our comments
+  var ref = db.ref('/comments');
+  let key = await ref.push(entry).then((snapshot) => {
+    return snapshot.key;
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+  
+  var reply = db.ref(`/comments/${req.body.cid}/replies/${key}`);
+  reply.set(true);
+  
+  let userComment = db.ref(`/users/${entry.author}/comments/${key}`);
+  userComment.set(true).then(() => {
+    res.status(200).send(entry);
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+/**
+ * Sets numOfReplies
+ */
+router.post('/numChange', (req, res) => {
+  let cid = req.body.cid;
+  let num = req.body.num;
+
+  var ref = db.ref(`/comments/${cid}/numOfReplies`);
+  ref.set(num).then(() => {
+    res.status(200).send();
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
 });
 
 /**

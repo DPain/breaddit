@@ -16,6 +16,30 @@ router.get('/', (req, res) => {
   });
 });
 
+// Gets hasPosts value
+router.get('/:_id/hasPosts', (req,res) => {
+  var ref = db.ref(`/subreddit/${req.params._id}/hasPosts`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+// Gets list of Subreddit posts
+router.get('/:_id/posts', (req,res) => {
+  var ref = db.ref(`/subreddit/${req.params._id}/posts`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
 // Creates a Subreddit.
 router.post('/', (req, res) => {
   // #TODO: Only allow users with role: admin to create subreddit.
@@ -23,8 +47,8 @@ router.post('/', (req, res) => {
   let name = req.body.name;
 
   // Get a database reference to our posts
-  var ref = db.ref('/subreddit');
-  ref.push(name).then(() => {
+  var ref = db.ref(`/subreddit/${name}`);
+  ref.set({hasPosts: false}).then(() => {
     res.status(200).send();
     return
   }).catch(error => {
