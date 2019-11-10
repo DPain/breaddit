@@ -14,7 +14,6 @@
     <script defer src="/__/firebase/init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/327de1ef48.js"></script>
-    <script src="server-requests.js"></script>
   </head>
   <body>
     <nav class="hidden navbar navbar-expand-md navbar-dark sticky-top" id="nav">
@@ -79,6 +78,33 @@
         </div>
       </section>
       
+      <!--BEGIN POST TEMPLATE-->
+      <section class="hidden" id="postpage">
+        <div class="card w-100 fullpost">
+          <div class="d-flex bd-highlight card-body">
+            <div class="p-2 bd-highlight float-left" id="votes">
+              <a class="voteup"><i class="fas fa-caret-up vote-arrow up"></i></a>
+              <div id="crumbs"></div>
+              <a class="votedown"><i class="fas fa-caret-down vote-arrow down"></i></a>
+            </div>
+            <div class="p-2 flex-grow-1 bd-highlight float-right">
+              <h6 class="card-subtitle mb-2 text-muted text-left" id="postInfo"></h6>
+              <h5 class="card-title text-left"><strong id="title"></strong></h5>
+              <p class="card-text text-left" id="body"></p>
+            </div>
+          </div>
+          <div class="card-body">
+            <a class="postComments card-link text-muted float-left" id="${postID}"><i class="fas fa-comment-alt"></i> <span id="totalComments"></span> Comments</a>
+          </div>
+          <div class="card-body border-bottom">
+            <textarea name="writtenComment" class="text-white form-control w-100 float-none mb-1" type="textarea" id="writtenComment" placeholder="What are your thoughts?"></textarea>
+            <button type="button" class="btn text-white submitNewComment">Submit</button>
+          </div>
+          <div class="card-body" id="comments">
+          </div>
+        </div>
+      </section>
+      
       <!-- BEGIN PROFILE TEMPLATE-->
       <section class="hidden" id="profile">
         <div class="d-inline-flex bd-highlight">
@@ -88,14 +114,12 @@
             <p class="text-center"><i class="fas fa-spa"></i> Crumbs<br><span class="text-muted" id="usercrumbs">27</span></p>
           </div>
         </div>
-        <br>
       </section>
       
       <!--Use ONLY on personal user profile-->
       <button disabled type="button" class="btn text-white bg-dark mt-1" id="googlesignin">Join Breaddit</button>
       
       <!--BEGIN PROFILE POSTS-->
-      <br>
       <section class="hidden mt-1" id="profileXtras">
         <ul class="d-inline-flex bd-highlight nav nav-tabs bg-dark">
           <li class="p-2 bd-highlight nav-item">
@@ -111,13 +135,13 @@
       
       <!-- BEGIN POST CREATION PAGE-->
       <section class="hidden" id="newPost">
-        <h1>Create your new post for <span id="postBreaddit"></span></h1>
+        <h1>Create your new post for b/<span id="postBreaddit"></span></h1>
         <div class="d-flex justify-content-center">
           <input name="postTitle" class="text-white form-control w-75 float-none" type="text" id="postTitle" placeholder="Title" />
         </div>
         <br>
         <div class="d-flex justify-content-center">
-          <textarea name="postBody" class="text-white form-control w-75 float-none" type="textarea" id="#postBody" placeholder="Body"></textarea>
+          <textarea name="postBody" class="text-white form-control w-75 float-none" type="textarea" id="postBody" placeholder="Body"></textarea>
         </div>
         <br>
         <div class="d-flex justify-content-center">
@@ -128,13 +152,13 @@
       <!-- BEGIN BREADDIT TEMPLATE-->
       <section class="hidden" id="breadditPage">
         <h1 id="breadditname"></h1>
-        <button type="button" class="btn text-white" id="createNewPost">Create New Post</button>
-        <div id="breadditposts"></div>
+        <button type="button" class="btn text-white mb-3" id="createNewPost">Create New Post</button>
+        <div id="breadditposts" class="posts"></div>
       </section>
-    
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="server-requests.js"></script>
     <script src="page-responses.js"></script>
   </body>
 </html>

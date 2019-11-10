@@ -62,11 +62,40 @@ async function request_post(bool, pid) {
     return val;
 }
 
-async function request_user_posts(bool) {
-    console.log('user posts requested');
+async function request_comment(bool, cid) {
+    console.log('comment requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let uid = await firebase.auth().currentUser.uid;
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${uid}/posts`, {
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments/${cid}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.json());
+    console.log(val);
+    return val;
+}
+
+async function request_other_user(bool, userID) {
+    console.log('other user requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${userID}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.json());
+    console.log(val);
+    return val;
+}
+
+async function request_breaddit_hasPosts(bool, breaddit){
+    console.log('breaddit hasPosts requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/subreddit/${breaddit}/hasPosts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -74,6 +103,21 @@ async function request_user_posts(bool) {
         }
     })
     .then((resp) => resp.text());
+    console.log(val);
+    return val;
+}
+
+async function request_breaddit_posts(bool, breaddit){
+    console.log('breaddit requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/subreddit/${breaddit}/posts`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        }
+    })
+    .then((resp) => resp.json());
     console.log(val);
     return val;
 }
@@ -130,6 +174,42 @@ async function create_post(title, body, subreddit) {
     return await response;
 }
 
+async function create_comment(body, pid) {
+    let params = {
+        "body": body,
+        "pid": pid
+    };
+    console.log('create comment requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(params)
+    });
+    return await response;
+}
+
+async function create_reply(body, cid) {
+    let params = {
+        "body": body,
+        "cid": cid
+    };
+    console.log('create comment requested');
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments/reply`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(params)
+    });
+    return await response;
+}
+
 //change data
 async function change_name(name) {
     let params = {
@@ -147,6 +227,39 @@ async function change_name(name) {
     return await response;
 }
 
+async function update_post(num, pid) {
+    let params = {
+        "num": num,
+        "pid": pid
+    };
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts/numChange`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(params)
+    });
+    return await response;
+}
+
+async function update_comment(num, cid) {
+    let params = {
+        "num": num,
+        "cid": cid
+    };
+    let token = await firebase.auth().currentUser.getIdToken();
+    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments/numChange`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': token
+        },
+        body: JSON.stringify(params)
+    });
+    return await response;
+}
 
 /*
  * Auth function called when clicking the Login/Logout button.
