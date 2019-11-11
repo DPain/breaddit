@@ -75,6 +75,28 @@ router.get('/:_id', (req, res) => {
 });
 
 /**
+ * Gets the Post as well as all the associated Comments for it.
+ */
+router.get('/:_id/all', async (req, res) => {
+  // Get a database reference to a post
+  let ref = db.ref('/posts/' + req.params._id);
+
+  let post = ref.once('value').then((snapshot) => {
+    return snapshot.val();
+  }).catch(error => {
+    return null;
+  });
+
+  if (post) {
+    let keys = Object.keys(post);
+    if (keys.includes('comments')) {
+      let comments = Object.keys(post['comments']);
+      // TODO: Get all comments
+    }
+  }
+});
+
+/**
  * Deletes a specific Post.
  */
 router.delete('/:_id', (req, res) => {
