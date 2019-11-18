@@ -12,34 +12,63 @@ const Comment = require("../models/comment");
 router.post('/', async (req, res) => {
   // Creates a Comment entry
   let entry = new Comment();
-  entry.author = req.body.author;
+  entry.authorid = req.body.uid;
   entry.body = req.body.body;
-  entry.karma = 0;
+  entry.author = req.body.name;
+  entry.path = req.body.path;
+  let breaddit = req.body.breaddit;
+  
+  let path = req.body.path.split("/");
+  let forRef = `/posts/${path[0]}/comments`;
+  path.forEach((curr, index) => {
+    if(index > 0){
+      forRef += `/${curr}/replies`;
+    }
+  });
 
   // Get a database reference to our comments
-  var ref = db.ref('/comments');
+  var ref = db.ref(`/comments`);
   let key = await ref.push(entry).then((snapshot) => {
     return snapshot.key;
   }).catch(error => {
     console.error(error);
     res.status(500).send();
   });
-
-  let userComment = db.ref(`/users/${entry.author}/comments/${key}`);
-  userComment.set(true).then(() => {
+  
+  let postRef = db.ref(`${forRef}/${key}`);
+  postRef.set(entry);
+  
+  
+  //attempt to set num of comments for post
+  let forNumRef = forRef.substring(0, forRef.length - 8);
+  var numRef = db.ref(`/posts/${path[0]}/numOfComments`);
+  numRef.transaction((current_value) => {
+    return (current_value || 0) + 1;
+  });
+  var numProfile = db.ref(`/users/${req.body.puid}/posts/${path[0]}/numOfComments`);
+  numProfile.transaction((current_value) => {
+    return (current_value || 0) + 1;
+  });
+  var numBreaddit = db.ref(`/subreddit/${breaddit}/posts/${path[0]}/numOfComments`);
+  numBreaddit.transaction((current_value) => {
+    return (current_value || 0) + 1;
+  });
+  //set num of replies for comments
+  if(path[1] !== null){
+    var commentRef = db.ref(`${forNumRef}/numOfReplies`);
+    commentRef.transaction((current_value) => {
+      return (current_value || 0) + 1;
+    });
+  }
+  
+  let userComment = db.ref(`/users/${req.body.uid}/comments/${key}`);
+  userComment.set(entry).then(() => {
     res.status(200).send(entry);
     return
   }).catch(error => {
     console.error(error);
     res.status(500).send();
   });
-});
-
-/**
- * Gets multiple Comments.
- */
-router.post('/', (req, res) => {
-  // #TODO: Implement
 });
 
 /**
@@ -63,6 +92,21 @@ router.get('/:_id', (req, res) => {
 router.delete('/:_id', (req, res) => {
   // Get a database reference to a comment
   var ref = db.ref('/comments/' + req.params._id);
+  
+  let path = req.body.path.split("/");
+  let forRef = `/posts/${path[0]}/comments`;
+  path.forEach((curr, index) => {
+    if(index > 0){
+      forRef += `/${curr}/replies`;
+    }
+  });
+  
+  var postRef = db.ref(`${forRef}/${req.params._id}/body`);
+  postRef.set("[DELETED COMMENT]");
+  
+  var userRef = db.ref(`/users/${req.body.uid}/comments/${req.params._id}`);
+  userRef.remove();
+  
   ref.remove().then(() => {
     res.status(200).send();
     return null;
