@@ -27,13 +27,12 @@ router.get('/', (_, res) => {
 router.post('/', async (req, res) => {
   // Creates a Post entry
   let entry = new Post();
-  entry.author = req.body.uid;
+  entry.authorid = req.body.uid;
   entry.body = req.body.body;
-  entry.comments = [];
-  entry.karma = 0;
   entry.subreddit = req.body.subreddit;
   entry.title = req.body.title;
-
+  entry.author = req.body.name;
+  
   // Get a database reference to our posts
   var ref = db.ref('/posts');
   let key = await ref.push(entry).then((snapshot) => {
@@ -42,9 +41,15 @@ router.post('/', async (req, res) => {
     console.error(error);
     res.status(500).send();
   });
-
-  let userPost = db.ref(`/users/${entry.author}/posts/${key}`);
-  userPost.set(true).then(() => {
+  
+  var breadditPost = db.ref(`/subreddit/${entry.subreddit}/posts/${key}`);
+  breadditPost.set(entry);
+  
+  var breadditHasPosts = db.ref(`/subreddit/${entry.subreddit}/hasPosts`);
+  breadditHasPosts.set(true);
+  
+  var userPost = db.ref(`/users/${req.body.uid}/posts/${key}`);
+  userPost.set(entry).then(() => {
     res.status(200).send(entry);
     return
   }).catch(error => {
@@ -73,6 +78,12 @@ router.get('/:_id', (req, res) => {
  * Deletes a specific Post.
  */
 router.delete('/:_id', (req, res) => {
+  var userRef = db.ref(`/users/${req.body.uid}/posts/${req.params._id}`);
+  userRef.remove();
+  
+  var breadditRef = db.ref(`/subreddit/${req.body.breaddit}/posts/${req.params._id}`);
+  breadditRef.remove();
+  
   // Get a database reference to a post
   var ref = db.ref('/posts/' + req.params._id);
   ref.remove().then(() => {
@@ -83,6 +94,20 @@ router.delete('/:_id', (req, res) => {
     res.status(500).send();
   });
 });
+/*
+router.post('/numChange', (req, res) => {
+  let pid = req.body.pid;
+  let num = req.body.num;
+
+  var ref = db.ref(`/posts/${pid}/numOfComments`);
+  ref.set(num).then(() => {
+    res.status(200).send();
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});*/
 
 /**
  * Updates a specific Post.
