@@ -5,11 +5,13 @@ function Comment() {
   return {
     body: "", // String
     karma: 0, // Integer
-    author: "" // String
-  }
+    authorid: "", // String
+    author: "",
+    path: "",
+    numOfReplies: 0
+  };
 }
 
 // Prevents the Class from being modified.
 Object.freeze(Comment);
-
 module.exports = Comment;
