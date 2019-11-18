@@ -75,6 +75,20 @@ router.get('/:_id/posts', (req, res) => {
 });
 
 /**
+ * get name
+ */
+router.get('/:_id/name', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}/name`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+/**
  * Rename yourself
  */
 router.post('/rename', (req, res) => {
@@ -84,6 +98,36 @@ router.post('/rename', (req, res) => {
   var ref = db.ref(`/users/${uid}/name`);
   ref.set(name).then(() => {
     res.status(200).send();
+    return
+  }).catch(error => {
+    console.error(error);
+    res.status(500).send();
+  });
+});
+
+/**
+ * Add profile pic
+ */
+router.post('/pfp', (req, res) => {
+  let uid = req.body.uid;
+  let pfp = req.body.pfp;
+  
+  var ref = db.ref(`/users/${uid}/pfp`);
+  ref.set(pfp).then(() => {
+    res.status(200).send();
+    return
+  }).catch(error => {
+    res.status(500).send();
+  });
+});
+
+/**
+ * Get profile pic
+ */
+router.get('/:_id/pfp', (req, res) => {
+  var ref = db.ref(`/users/${req.params._id}/pfp`);
+  ref.once('value').then((snapshot) => {
+    res.status(200).send(snapshot.val());
     return
   }).catch(error => {
     console.error(error);
