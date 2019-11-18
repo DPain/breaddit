@@ -69,3 +69,12 @@ typings/
 
 # next.js build output
 .next
+
+# Eclipse Nodejs Codemix & VS Code
+.vscode/
+
+# Cloud9 settings
+.c9/
+
+# Firebase Service account key
+serviceAccountKey.json

@@ -1,65 +1,155 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
-
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/7.2.0/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/7.2.0/firebase-auth.js"></script>
-    <script defer src="/__/firebase/7.2.0/firebase-database.js"></script>
-    <script defer src="/__/firebase/7.2.0/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/7.2.0/firebase-storage.js"></script>
-    <!-- initialize the SDK after all desired features are loaded -->
+    <meta charset=utf-8 />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="winner.ico">
+    <title>Breaddit</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Rubik&display=swap" rel="stylesheet">
+    <link rel = "stylesheet" type = "text/css" href = "breaddit.css">
+    <script defer src="/__/firebase/7.1.0/firebase-app.js"></script>
+    <script defer src="/__/firebase/7.1.0/firebase-auth.js"></script>
     <script defer src="/__/firebase/init.js"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/327de1ef48.js"></script>
   </head>
   <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <nav class="hidden navbar navbar-expand-md navbar-dark sticky-top" id="nav">
+      <a id="home" class="navbar-brand" href="#"><!--i class="fas fa-bread-slice"></i--><img src="winner.ico" alt="HTML5 Icon" style="width:25px;height:25px;"> breaddit</a>
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link px-3" href="#" id="userprofile">User</a>
+        </li>
+      </ul>
+    </nav>
+    <!--END NAVBAR-->
+    
+    <div class="container pt-2">
+      
+      <!-- BEGIN PAGE PRIOR TO LOGIN-->
+      <section id="notloggedin">
+        <div class="jumbotron bg-dark">
+          <h1>Welcome to Breaddit!</h1>
+          <p>Sign in with Google to continue</p>
+        </div>
+      </section>
+      
+      <!--BEGIN HOME PAGE-->
+      <section class="hidden justify-content-center" id="homepage">
+        <div class="p-2 w-75 bd-highlight input-group mb-3" id="create">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-createbreaddit">b/</span>
+          </div>
+          <input name="breaddit" type="text" class="form-control text-white float-none" id="breaddit" placeholder="New Breaddit name" aria-label="New Breaddit name" aria-describedby="basic-createbreaddit"/>
+          <div class="input-group-append">
+            <button type="button" class="btn text-white" id="createbreaddit">Create</button>
+          </div>
+        </div>
+        <div class="posts" id="posts">
+        </div>
+      </section>
+      
+      <!--BEGIN POST TEMPLATE-->
+      <section class="hidden" id="postpage">
+        <div class="card w-100 fullpost">
+          <div class="d-flex bd-highlight card-body posts postSet">
+            <div class="p-2 bd-highlight float-left" id="votes">
+              <a class="voteup"><i class="fas fa-caret-up vote-arrow up upPost"></i></a>
+              <div id="crumbs"></div>
+              <a class="votedown"><i class="fas fa-caret-down vote-arrow down downPost"></i></a>
+            </div>
+            <div class="p-2 flex-grow-1 bd-highlight float-right breaddit breadditSet">
+              <h6 class="card-subtitle mb-2 text-muted text-left" id="postInfo"></h6>
+              <h5 class="card-title text-left"><strong id="title"></strong></h5>
+              <p class="card-text text-left" id="body"></p>
+              <span class="hidden userSet user"></span>
+            </div>
+          </div>
+          <div class="card-body">
+            <a class="postComments card-link text-muted float-left" id="${postID}"><i class="fas fa-comment-alt"></i> <span id="totalComments"></span> Comments</a>
+          </div>
+          <div class="card-body border-bottom">
+            <textarea name="writtenComment" class="text-white form-control w-100 float-none mb-1" type="textarea" id="writtenComment" placeholder="What are your thoughts?"></textarea>
+            <button type="button" class="btn text-white submitNewComment">Submit</button>
+          </div>
+          <div class="card-body comments" id="comments">
+          </div>
+        </div>
+      </section>
+      
+      <!-- BEGIN PROFILE TEMPLATE-->
+      <section class="hidden" id="profile">
+        <div class="d-inline-flex bd-highlight">
+          <div class="p-2 bd-highlight" id="profilepic"></div>
+          <div class="blurred p-2 flex-grow-1 bd-highlight" id="userinfo">
+            <h1 class="text-center" id="username">u/name</h1>
+            <p class="text-center"><i class="fas fa-spa"></i> Crumbs<br><span class="text-muted" id="usercrumbs">27</span></p>
+          </div>
+        </div>
+      </section>
+      
+      <!--Use ONLY on personal user profile-->
+      <button disabled type="button" class="btn text-white bg-dark mt-1" id="googlesignin">Join Breaddit</button>
+      <section class="hidden" id="changeuser">
+        <div class="d-flex justify-content-center bd-highlight hidden">
+          <div class="p-2 w-50 bd-highlight input-group mb-1">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">u/</span>
+            </div>
+            <input name="myname" type="text" class="form-control text-white float-none" id="myname" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"/>
+          </div>
+          <div class="p-2 bd-highlight">
+            <button type="button" class="btn text-white bg-dark" id="change">Change</button>
+          </div>
+        </div>
+      </section>
+        
+      <!--BEGIN PROFILE POSTS-->
+      <section class="hidden mt-1" id="profileXtras">
+        <ul class="d-inline-flex bd-highlight nav nav-tabs bg-dark">
+          <li class="p-2 bd-highlight nav-item">
+            <a class="nav-link active text-muted" id="posttab">Posts</a>
+          </li>
+          <li class="p-2 bd-highlight nav-item">
+            <a class="nav-link text-muted" id="commenttab">Comments</a>
+          </li>
+        </ul>
+        <div class="p-2 flex-grow-1 bd-highlight posts" id="userposts">
+        </div>
+        <div class="hidden p-2 flex-grow-1 bd-highlight comments" id="usercomments">
+        </div>
+      </section>
+      
+      <!-- BEGIN POST CREATION PAGE-->
+      <section class="hidden" id="newPost">
+        <h1>Create your new post for b/<span id="postBreaddit"></span></h1>
+        <div class="d-flex justify-content-center">
+          <input name="postTitle" class="text-white form-control w-75 float-none" type="text" id="postTitle" placeholder="Title" />
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+          <textarea name="postBody" class="text-white form-control w-75 float-none" type="textarea" id="postBody" placeholder="Body"></textarea>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn text-white" id="submitNewPost">Submit</button>
+        </div>
+      </section>
+      
+      <!-- BEGIN BREADDIT TEMPLATE-->
+      <section class="hidden" id="breadditPage">
+        <div class="jumbotron bg-dark">
+          <h1 id="breadditname"></h1>
+          <button type="button" class="btn text-white mb-3" id="createNewPost">Create New Post</button>
+        </div>
+        <div id="breadditposts" class="posts"></div>
+      </section>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = ['auth', 'database', 'messaging', 'storage'].filter(feature => typeof app[feature] === 'function');
-          document.getElementById('load').innerHTML = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          document.getElementById('load').innerHTML = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="server-requests.js"></script>
+    <script src="page-responses.js"></script>
   </body>
 </html>
