@@ -22,15 +22,26 @@ body {
   border-radius: 10px;
 }
 
-.card {
+.post {
   background: #1a1a1b;
   overflow: hidden;
   border-radius: 10px;
   border: 1px solid gray;
 }
 
-.card:hover{
+.post:hover{
   border: 1px solid white;
+}
+
+.fullpost {
+  background: #1a1a1b;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.comment {
+  background: #1a1a1b;
+  border-radius: 0px;
 }
 
 .navbar-dark {
@@ -121,5 +132,5 @@ body {
 }
 
 .blurred {
-  filter: blur(25px);
+  filter: blur(15px);
 }
