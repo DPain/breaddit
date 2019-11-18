@@ -92,9 +92,18 @@ async function modifyRecord(uid, id, vote) {
  */
 router.post('/comment/:_id', async (req, res) => {
   let uid = req.body.uid;
+  let userid = req.body.userid;
   let id = req.params._id;
   let vote = (req.body.vote === true) ? true : false;
-
+  
+  let path = req.body.path.split("/");
+  let forRef = `/posts/${path[0]}/comments`;
+  path.forEach((curr, index) => {
+    if(index > 0){
+      forRef += `/${curr}/replies`;
+    }
+  });
+  
   // Checks whether the content exists.
   let contentExists = await db.ref(`/comments/${id}/`).once('value').then((snapshot) => {
     return (snapshot.val() !== null) ? true : false;
@@ -104,8 +113,17 @@ router.post('/comment/:_id', async (req, res) => {
     let allowed = await modifyRecord(uid, id, vote);
 
     if (allowed) {
+      db.ref(`${forRef}/${id}/karma`).transaction((val) => {
+        return val + (vote ? 1 : -1);
+      });
+      db.ref(`/users/${userid}/comments/${id}/karma`).transaction((val) => {
+        return val + (vote ? 1 : -1);
+      });
+      db.ref(`/users/${userid}/karma`).transaction((val) => {
+        return val + 1;
+      });
       db.ref(`/comments/${id}/karma`).transaction((val) => {
-        console.log(val + (vote ? 1 : -1));
+        //console.log(val + (vote ? 1 : -1));
         return val + (vote ? 1 : -1);
       }).then(_ => {
         res.status(200).send();
@@ -127,7 +145,9 @@ router.post('/comment/:_id', async (req, res) => {
  */
 router.post('/post/:_id', async (req, res) => {
   let uid = req.body.uid;
+  let userid = req.body.userid;
   let id = req.params._id;
+  let breaddit = req.body.breaddit;
   let vote = (req.body.vote === true) ? true : false;
 
   // Checks whether the content exists.
@@ -139,8 +159,17 @@ router.post('/post/:_id', async (req, res) => {
     let allowed = await modifyRecord(uid, id, vote);
 
     if (allowed) {
+      db.ref(`/users/${userid}/posts/${id}/karma`).transaction((val) =>{
+        return val + (vote ? 1 : -1);
+      });
+      db.ref(`/users/${userid}/karma`).transaction((val) => {
+        return val + 1;
+      });
+      db.ref(`/subreddit/${breaddit}/posts/${id}/karma`).transaction((val) =>{
+        return val + (vote ? 1 : -1);
+      });
       db.ref(`/posts/${id}/karma`).transaction((val) => {
-        console.log(val + (vote ? 1 : -1));
+        //console.log(val + (vote ? 1 : -1));
         return val + (vote ? 1 : -1);
       }).then(_ => {
         res.status(200).send();
