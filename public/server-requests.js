@@ -6,7 +6,7 @@ async function request_karma(bool) {
     };
     let token = await firebase.auth().currentUser.getIdToken();
 
-    let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/karma/comment/-LrzMy3yhYJfR6mefUaN', {
+    let val = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/karma/comment/-LrzMy3yhYJfR6mefUaN', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
             'Content-Type': 'application/json',
@@ -20,7 +20,7 @@ async function request_karma(bool) {
 async function request_username(bool, userID) {
     console.log('username requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${userID}/name`, {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile/${userID}/name`, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
             'Content-Type': 'application/json',
@@ -35,7 +35,7 @@ async function request_username(bool, userID) {
 async function request_profile(bool) {
     console.log('profile requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile', {
+    let val = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile', {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         headers: {
             'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ async function request_profile(bool) {
 async function request_post(bool, pid) {
     console.log('specific post requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts/${pid}`, {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts/${pid}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,7 @@ async function request_post(bool, pid) {
 async function request_comment(bool, cid) {
     console.log('comment requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments/${cid}`, {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/comments/${cid}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ async function request_comment(bool, cid) {
 async function request_other_user(bool, userID) {
     console.log('other user requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/${userID}`, {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile/${userID}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ async function request_other_user(bool, userID) {
 async function request_breaddit_hasPosts(bool, breaddit){
     console.log('breaddit hasPosts requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/subreddit/${breaddit}/hasPosts`, {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/subreddit/${breaddit}/hasPosts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -110,7 +110,7 @@ async function request_breaddit_hasPosts(bool, breaddit){
 async function request_breaddit_posts(bool, breaddit){
     console.log('breaddit requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/subreddit/${breaddit}/posts`, {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/subreddit/${breaddit}/posts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ async function request_breaddit_posts(bool, breaddit){
 async function request_all_posts(bool) {
     console.log('all posts requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    let val = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts', {
+    let val = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -144,7 +144,7 @@ async function create_breaddit(name) {
     };
     console.log('create breaddit requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/subreddit', {
+    const response = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/subreddit', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -164,7 +164,7 @@ async function create_post(title, body, subreddit) {
     };
     console.log('create post requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts', {
+    const response = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -185,7 +185,7 @@ async function create_comment(body, path, puid, breaddit) {
     };
     console.log('create comment requested');
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/comments`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ async function vote_post(pid, vote, breaddit, userid){
         "userid": userid
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/karma/post/${pid}`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/karma/post/${pid}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ async function vote_comment(cid, vote, path, userid){
         "userid": userid
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/karma/comment/${cid}`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/karma/comment/${cid}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -239,7 +239,7 @@ async function change_name(name) {
         "name": name
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch('https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/rename', {
+    const response = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile/rename', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -256,7 +256,7 @@ async function update_post(num, pid) {
         "pid": pid
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts/numChange`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts/numChange`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -273,7 +273,7 @@ async function update_comment(num, cid) {
         "cid": cid
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments/numChange`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/comments/numChange`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ async function add_pfp(pfp){
         "pfp": pfp
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/profile/pfp`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile/pfp`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -306,7 +306,7 @@ async function delete_comment(cid, path){
         "path": path
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/comments/${cid}`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/comments/${cid}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -322,7 +322,7 @@ async function delete_post(pid, breaddit){
         "breaddit": breaddit
     };
     let token = await firebase.auth().currentUser.getIdToken();
-    const response = await fetch(`https://us-central1-breaddit-885b4.cloudfunctions.net/api/posts/${pid}`, {
+    const response = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts/${pid}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

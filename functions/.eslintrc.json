@@ -1,12 +1,15 @@
 {
   "parserOptions": {
     // Required for certain syntax usages
-    "ecmaVersion": 2017
+    "ecmaVersion": 2020
   },
   "plugins": [
     "promise"
   ],
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue/recommended"
+  ],
   "rules": {
     // Removed rule "disallow the use of console" from recommended eslint rules
     "no-console": "off",
