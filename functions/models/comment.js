@@ -8,7 +8,7 @@ function Comment() {
     authorid: "", // String
     author: "",
     path: "",
-    numOfReplies: 0
+    numOfReplies: 0,
   };
 }
 

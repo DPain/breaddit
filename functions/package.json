@@ -22,8 +22,8 @@
   "devDependencies": {
     "eslint": "^7.19.0",
     "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-vue": "^7.5.0",
     "firebase-functions-test": "^0.2.3"
   },
-  "private": true,
-  "type": "module"
+  "private": true
 }

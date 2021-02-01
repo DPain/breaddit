@@ -6,7 +6,7 @@ async function request_karma(bool) {
     };
     let token = await firebase.auth().currentUser.getIdToken();
 
-    let val = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/karma/comment/-LrzMy3yhYJfR6mefUaN', {
+    let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/karma/comment/-LrzMy3yhYJfR6mefUaN`, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         headers: {
             'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ async function request_karma(bool) {
     console.log(val);
 }
 
-async function request_username(bool, userID) {
+async function request_username(userID) {
     console.log('username requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile/${userID}/name`, {
@@ -32,7 +32,7 @@ async function request_username(bool, userID) {
     return val;
 }
 
-async function request_profile(bool) {
+async function request_profile() {
     console.log('profile requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile', {
@@ -47,7 +47,7 @@ async function request_profile(bool) {
     return val;
 }
 
-async function request_post(bool, pid) {
+async function request_post(pid) {
     console.log('specific post requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts/${pid}`, {
@@ -62,7 +62,7 @@ async function request_post(bool, pid) {
     return val;
 }
 
-async function request_comment(bool, cid) {
+async function request_comment(cid) {
     console.log('comment requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/comments/${cid}`, {
@@ -77,7 +77,7 @@ async function request_comment(bool, cid) {
     return val;
 }
 
-async function request_other_user(bool, userID) {
+async function request_other_user(userID) {
     console.log('other user requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/profile/${userID}`, {
@@ -92,7 +92,7 @@ async function request_other_user(bool, userID) {
     return val;
 }
 
-async function request_breaddit_hasPosts(bool, breaddit){
+async function request_breaddit_hasPosts(breaddit){
     console.log('breaddit hasPosts requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/subreddit/${breaddit}/hasPosts`, {
@@ -107,7 +107,7 @@ async function request_breaddit_hasPosts(bool, breaddit){
     return val;
 }
 
-async function request_breaddit_posts(bool, breaddit){
+async function request_breaddit_posts(breaddit){
     console.log('breaddit requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch(`https://us-central1-breaddit-1ce34.cloudfunctions.net/api/subreddit/${breaddit}/posts`, {
@@ -117,12 +117,15 @@ async function request_breaddit_posts(bool, breaddit){
             'Authorization': token
         }
     })
-    .then((resp) => resp.json());
+    .then(resp => {
+        console.log(resp);
+        resp.json()
+    });
     console.log(val);
     return val;
 }
 
-async function request_all_posts(bool) {
+async function request_all_posts() {
     console.log('all posts requested');
     let token = await firebase.auth().currentUser.getIdToken();
     let val = await fetch('https://us-central1-breaddit-1ce34.cloudfunctions.net/api/posts', {

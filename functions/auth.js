@@ -1,11 +1,11 @@
-import { auth } from "firebase-admin";
-import { database } from "./firebase";
-const db = database();
-import { readFileSync } from "fs";
+const admin = require("firebase-admin");
+const fb = require('./firebase');
+const db = fb.database()
+
+const Profile = require("./models/profile");
 
 async function createUserProfile(uid) {
-  let rawdata = readFileSync("./defaultProfile.json");
-  let profile = JSON.parse(rawdata);
+  const profile = new Profile();
 
   let ref = db.ref(`/users/${uid}`);
   ref
@@ -21,7 +21,7 @@ async function createUserProfile(uid) {
 async function verifyToken(req, res, next) {
   const idToken = req.headers.authorization;
   try {
-    const decodedToken = await auth().verifyIdToken(idToken);
+    const decodedToken = await admin.auth().verifyIdToken(idToken);
 
     if (decodedToken) {
       let uid = decodedToken.uid;
@@ -60,4 +60,4 @@ async function verifyToken(req, res, next) {
   }
 }
 
-export default verifyToken;
+module.exports = verifyToken

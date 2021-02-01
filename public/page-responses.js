@@ -90,14 +90,14 @@ function initApp() {
             //$('#profilepic').html(`<img src="${user.photoURL}" id="pic">`);
             //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
             // [END_EXCLUDE]
-            let name = await request_username(false, uid);
+            let name = await request_username(uid);
             $("#name").html(name);
             $("#nav").removeClass("hidden");
             $("#googlesignin").addClass("hidden");
             $("#changeuser").addClass("hidden");
             $("#notloggedin").addClass("hidden");
             $("#homepage").removeClass("hidden"); //switch to actual homepage;
-            let allposts = await request_all_posts(false);
+            let allposts = await request_all_posts();
             console.log(allposts);
             let currPost = "";
             $("#breadditposts").html("");
@@ -296,7 +296,7 @@ async function home(){
     $("#changeuser").addClass("hidden");
     $("#googlesignin").addClass("hidden");
     $("#homepage").removeClass("hidden");
-    let allposts = await request_all_posts(false);
+    let allposts = await request_all_posts();
     console.log(allposts);
     let currPost = "";
     $("#breadditposts").html("");
@@ -328,7 +328,7 @@ async function post(postID){
     $("#userposts").html("");
     $("#comments").html("");
     $("#usercomments").html("");
-    const post = await request_post(false, postID);
+    const post = await request_post(postID);
     const authorID = post["authorid"];
     const author = post["author"];
     $("#crumbs").text(post["karma"]);
@@ -379,7 +379,7 @@ async function profile(userID){
     $("#postpage").addClass("hidden");
     $("#profile").removeClass("hidden");
     $("#profileXtras").removeClass("hidden");
-    let profile = await request_other_user(false, userID);
+    let profile = await request_other_user(userID);
     let name = profile["name"];
     let karma = profile["karma"];
     $("#username").html(`u/${name}`);
@@ -425,7 +425,7 @@ async function myProfile(){
     $("#profile").removeClass("hidden"); //show just profile and allow user to sign out
     $("#googlesignin").removeClass("hidden");
     $("#profileXtras").removeClass("hidden");
-    let myProfile = await request_profile(false);
+    let myProfile = await request_profile();
     console.log(myProfile);
     let name = myProfile["name"];
     let karma = myProfile["karma"];
@@ -488,9 +488,9 @@ async function breaddit(breaddit){
     $("#postpage").addClass("hidden");
     $("#breadditPage").removeClass("hidden");
     $("#breadditname").html(breaddit);
-    let breadditHasPosts = await request_breaddit_hasPosts(false, breaddit);
+    let breadditHasPosts = await request_breaddit_hasPosts(breaddit);
     if (breadditHasPosts){
-        let breadditPosts = await request_breaddit_posts(false, breaddit);
+        let breadditPosts = await request_breaddit_posts(breaddit);
         console.log(breadditPosts);
         $("#posts").html("");
         $("#userposts").html("");
@@ -582,7 +582,7 @@ $("#comments").on("click", ".reply", async function(){
 $("#comments").on("click", ".submitReply", async function(){
     let cid = $(this).attr("id");
     let body = $(`#w${cid}`).val();
-    let currComment = await request_comment(false, cid);
+    let currComment = await request_comment(cid);
     let path = currComment["path"].split("/");
     let postID = path[0];
     let puid = $("#postInfo").children(".postAuthor").attr("id");
@@ -696,7 +696,7 @@ $(".comments").on("click", ".voteup", async function(){
     $(this).children(".up").toggleClass("voted");
     let cid = $(this).children(".up").attr("id").slice(1);
     let path = $(`#c${cid}`).children(".path:first").attr("id");
-    let comment = await request_comment(false, cid);
+    let comment = await request_comment(cid);
     console.log(cid);
     console.log(comment["authorid"]);
     await vote_comment(cid, true, path, comment["authorid"]);
@@ -709,7 +709,7 @@ $(".comments").on("click", ".votedown", async function(){
     $(this).children(".down").toggleClass("voted");
     let cid = $(this).children(".down").attr("id").slice(1);
     let path = $(`#c${cid}`).children(".path:first").attr("id");
-    let comment = await request_comment(false, cid);
+    let comment = await request_comment(cid);
     console.log(cid);
     console.log(comment["authorid"]);
     await vote_comment(cid, false, path, comment["authorid"]);

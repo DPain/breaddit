@@ -7,16 +7,20 @@ const verifyToken = require('./auth');
 
 const app = express();
 
-var whitelist = ['http://localhost', 'https://breaddit-1ce34.firebaseapp.com', 'https://breaddit-1ce34.web.app']
+var whitelist = [
+  "http://localhost",
+  "https://breaddit-1ce34.firebaseapp.com",
+  "https://breaddit-1ce34.web.app",
+];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
-      return callback(null, true)
+      return callback(null, true);
     } else {
-      return callback(new Error('Not allowed by CORS'))
+      return callback(new Error("Not allowed by CORS"));
     }
-  }
-}
+  },
+};
 
 app.use(cors(corsOptions));
 
@@ -31,20 +35,20 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 
 // Routes
-const posts = require('./routes/posts');
-const profile = require('./routes/profile');
-const subreddit = require('./routes/subreddit');
-const comments = require('./routes/comments');
-const karma = require('./routes/karma');
+const posts = require("./routes/posts");
+const profile = require("./routes/profile");
+const subreddit = require("./routes/subreddit");
+const comments = require("./routes/comments");
+const karma = require("./routes/karma");
 
 /**
  * Exposed APIs
  */
-app.use('/posts', verifyToken, posts);
-app.use('/profile', verifyToken, profile);
-app.use('/subreddit', verifyToken, subreddit);
-app.use('/comments', verifyToken, comments);
-app.use('/karma', verifyToken, karma);
+app.use("/posts", verifyToken, posts);
+app.use("/profile", verifyToken, profile);
+app.use("/subreddit", verifyToken, subreddit);
+app.use("/comments", verifyToken, comments);
+app.use("/karma", verifyToken, karma);
 
 // End of exposed API.
 
