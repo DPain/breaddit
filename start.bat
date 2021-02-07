@@ -1,2 +1,1 @@
-SETX GOOGLE_APPLICATION_CREDENTIALS %~dp0serviceAccountKey.json
 firebase emulators:start

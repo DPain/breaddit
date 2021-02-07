@@ -78,3 +78,5 @@ typings/
 
 # Firebase Service account key
 serviceAccountKey.json
+
+dist/
