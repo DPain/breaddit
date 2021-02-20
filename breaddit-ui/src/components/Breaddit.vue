@@ -8,8 +8,8 @@
         </b-navbar-brand>
       </b-navbar>
     </div>
-    <!-- Using vue-router -->
-    <b-container fluid="sm" class="p-4">
+    <b-container fluid="md" class="p-4">
+      <!-- Using vue-router -->
       <router-view></router-view>
     </b-container>
   </div>
@@ -17,9 +17,6 @@
 
 <script>
 export default {
-  name: "Breaddit",
-  props: {
-    msg: String
-  }
+  name: "Breaddit"
 };
 </script>

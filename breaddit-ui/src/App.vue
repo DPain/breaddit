@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Breaddit msg="Welcome to Your Vue.js App" />
+    <Breaddit />
   </div>
 </template>
 
@@ -16,15 +16,17 @@ export default {
 </script>
 
 <style lang="scss">
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   background-image: url(../public/breadditbackground.jpg);
   min-height: 100%;
   height: auto;
+}
+
+ul {
+  margin: 0px;
 }
 </style>

@@ -50,6 +50,26 @@ $theme-colors: map-merge(
   $theme-colors
 );
 
+// Grid containers
+//
+// Define the maximum width of `.container` for different screen sizes.
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 768px,
+  xl: 850px
+) !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 720px,
+  xl: 800px
+) !default;
+
+
 // Bootstrap and its default variables
 @import '../../node_modules/bootstrap/scss/bootstrap';
 // BootstrapVue and its default variables

@@ -5,7 +5,8 @@ const settings = {
     borderVariant: "light-gray",
   },
   BButton: { variant: "dark", borderVariant: "white" },
-  BFormInput: { varient: "dark", borderVariant: "white"  },
+  BFormInput: { variant: "dark", borderVariant: "white" },
+  Container: {}
 };
 
 export default settings;

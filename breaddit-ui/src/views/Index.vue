@@ -1,45 +1,33 @@
 <template>
   <div>
     <b-row class="pb-3">
-      <b-col></b-col>
-      <b-col cols="9">
+      <b-col>
         <div>
           <b-input-group>
-            <b-input-group-prepend>
-              <b-button id="prepend" disabled>
-                b/
-              </b-button>
-            </b-input-group-prepend>
+            <b-button id="prepend" disabled>
+              b/
+            </b-button>
 
             <b-form-input
+              class="testtest"
               id="subreaddit-box"
               v-model="subreaddit"
               placeholder="Enter Subreaddit Name"
             ></b-form-input>
 
-            <b-input-group-append>
-              <b-button>
-                <b-icon icon="arrow-return-right" />
-              </b-button>
-            </b-input-group-append>
+            <b-button id="enter">
+              <b-icon icon="arrow-return-right" />
+            </b-button>
           </b-input-group>
         </div>
       </b-col>
-      <b-col></b-col>
     </b-row>
-    <b-row>
+    <b-row v-for="(item, i) in entries" :key="i">
       <b-col>
-        <b-card-group columns>
-          <b-card
-            v-for="(item, i) in entries"
-            :key="i"
-            class="m-1 p-1"
-            raised
-          >
-            <b-card-title class="headline" v-text="item.title"></b-card-title>
-            <b-card-text v-html="item.body"></b-card-text>
-          </b-card>
-        </b-card-group>
+        <b-card class="mb-1 mt-1 p-3" raised no-body>
+          <b-card-title v-text="item.title"></b-card-title>
+          <b-card-text v-html="item.body"></b-card-text>
+        </b-card>
       </b-col>
     </b-row>
   </div>
@@ -130,11 +118,22 @@ export default {
 
 #subreaddit-box {
   background-color: $dark;
-  border: 0;
+  border-radius: 0.25rem;
+  border-color: $gray-500;
 }
-#prepend {
+
+#prepend,
+#prepend:disabled {
   opacity: 1;
+  border-color: $gray-500;
+  margin-right: 0.5rem;
 }
+
+#enter {
+  border-color: $gray-500;
+  margin-left: 0.5rem;
+}
+
 a {
   color: #42b983;
 }
